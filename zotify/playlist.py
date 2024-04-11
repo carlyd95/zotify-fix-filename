@@ -53,7 +53,7 @@ def download_playlist(playlist):
     p_bar = Printer.progress(playlist_songs, unit='song', total=len(playlist_songs), unit_scale=True)
     enum = 1
     for song in p_bar:
-        download_track('extplaylist', song[TRACK][ID], extra_keys={'playlist': playlist[NAME], 'playlist_num': str(enum).zfill(2)}, disable_progressbar=True)
+        download_track('extplaylist', song[TRACK][ID], song[TRACK][NAME], extra_keys={'playlist': playlist[NAME], 'playlist_num': str(enum).zfill(2)}, disable_progressbar=True)
         p_bar.set_description(song[TRACK][NAME])
         enum += 1
 
