@@ -68,8 +68,11 @@ def get_song_info(song_id) -> Tuple[List[str], List[Any], str, str, Any, Any, An
         is_playable = info[TRACKS][0][IS_PLAYABLE]
         duration_ms = info[TRACKS][0][DURATION_MS]
 
-        image = ''
-        image_url = 'https://i1.sndcdn.com/artworks-WGyXxpAyyIBA3V6r-HsvnSw-t500x500.jpg'
+        image = info[TRACKS][0][ALBUM][IMAGES][0]
+        for i in info[TRACKS][0][ALBUM][IMAGES]:
+            if i[WIDTH] > image[WIDTH]:
+                image = i
+        image_url = image[URL]
 
         return artists, info[TRACKS][0][ARTISTS], album_name, name, image_url, release_year, disc_number, track_number, scraped_song_id, is_playable, duration_ms
     except Exception as e:
