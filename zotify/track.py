@@ -68,11 +68,8 @@ def get_song_info(song_id) -> Tuple[List[str], List[Any], str, str, Any, Any, An
         is_playable = info[TRACKS][0][IS_PLAYABLE]
         duration_ms = info[TRACKS][0][DURATION_MS]
 
-        image = info[TRACKS][0][ALBUM][IMAGES][0]
-        for i in info[TRACKS][0][ALBUM][IMAGES]:
-            if i[WIDTH] > image[WIDTH]:
-                image = i
-        image_url = image[URL]
+        image = ''
+        image_url = 'https://i1.sndcdn.com/artworks-WGyXxpAyyIBA3V6r-HsvnSw-t500x500.jpg'
 
         return artists, info[TRACKS][0][ARTISTS], album_name, name, image_url, release_year, disc_number, track_number, scraped_song_id, is_playable, duration_ms
     except Exception as e:
@@ -142,7 +139,7 @@ def get_song_duration(song_id: str) -> float:
     return duration
 
 
-def download_track(mode: str, track_id: str, extra_keys=None, disable_progressbar=False) -> None:
+def download_track(mode: str, track_id: str, track_name_override=None, extra_keys=None, disable_progressbar=False) -> None:
     """ Downloads raw song audio from Spotify """
 
     if extra_keys is None:
@@ -156,6 +153,9 @@ def download_track(mode: str, track_id: str, extra_keys=None, disable_progressba
 
         (artists, raw_artists, album_name, name, image_url, release_year, disc_number,
          track_number, scraped_song_id, is_playable, duration_ms) = get_song_info(track_id)
+
+        if track_name_override != None:
+            name = track_name_override
 
         song_name = fix_filename(artists[0]) + ' - ' + fix_filename(name)
 
