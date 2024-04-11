@@ -160,7 +160,7 @@ def download_track(mode: str, track_id: str, track_name_override=None, extra_key
         if track_name_override != None:
             name = track_name_override
 
-        song_name = fix_filename(artists[0]) + ' - ' + fix_filename(name)
+        song_name = artists[0] + ' - ' + name
 
         for k in extra_keys:
             output_template = output_template.replace("{"+k+"}", fix_filename(extra_keys[k]))
